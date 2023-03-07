@@ -17,8 +17,6 @@ import com.example.demo.EmployeeApplication;
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeRepository;
 
-
-
 @Transactional
 @SpringBootTest(classes = EmployeeApplication.class)
 @ExtendWith(MockitoExtension.class)
@@ -61,19 +59,17 @@ public class EmployeeRepoTest {
 		
 	}
 	
-//	@Test
-//	public void DeleteEmpById() {
-//		 Employee employee = getEmployee();
-//	      employeeRepository.save(employee);
-//	      employeeRepository.deleteById(employee.getEmpId());
-//	      List<Employee> result = new ArrayList<>();
-//	      //employeeRepository.findAll().forEach(e -> result.add(e));
-//			employeeRepository.findById(employee.getEmpId()).get();
-//
-//	      assertEquals(result.size(), 0);
-//		
-//}
-
+	@Test
+	   public void testDeleteById() {
+	      Employee employee = getEmployee();
+	      employeeRepository.save(employee);
+	      employeeRepository.deleteById(employee.getEmpId());
+	      List<Employee> result = new ArrayList<>();
+	      employeeRepository.findAll().forEach(e -> result.add(e));
+	      assertEquals(result.size(), 2);
+	      
+	}
+	
 	private Employee getEmployee() {
 		Employee employee = new Employee();
 		employee.setEmpName("Priyanshi");
@@ -97,3 +93,4 @@ public class EmployeeRepoTest {
 	}
 	
 }
+
