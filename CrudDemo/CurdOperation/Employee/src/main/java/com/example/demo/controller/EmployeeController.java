@@ -23,11 +23,6 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService  employeeService;
 
-
-	@GetMapping("/home")
-	public String home() {
-		return "this is home page";
-	}
 	
 	@GetMapping("/employees")
      public List<Employee> getListOfEmployees()
@@ -35,6 +30,11 @@ public class EmployeeController {
 		return employeeService.getListOfEmployees();
     	 
      }
+	@PostMapping("/multipleStudentSave")
+	public List<Employee>saveListOfEmployee(){
+		return employeeService.saveAll(saveListOfEmployee());
+	}
+	
 	
 	@GetMapping("/employees/{employeeId}")
 	public Optional<Employee> getEmployee(@PathVariable Long employeeId ){
@@ -57,15 +57,6 @@ public class EmployeeController {
 		return employeeService.deleteEmployee(employeeId);
 	}
 	
-	@PostMapping("/multipleStudentSave")
-	public String insertStudent(@RequestBody List<Employee> employee ) {
-		employeeService.saveAll(employee);
-		return "your record is saved sucessfully !!";
-	
-	}
-	
-
-
 }
 
 

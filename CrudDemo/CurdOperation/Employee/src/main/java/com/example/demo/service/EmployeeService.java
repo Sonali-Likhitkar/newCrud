@@ -17,7 +17,7 @@ public interface EmployeeService {
 	
 	public String deleteEmployee(Long employeeId);
 
-	public void saveAll(List<Employee> employee);
+	public List<Employee> saveAll(List<Employee> employee);
 	
 
 

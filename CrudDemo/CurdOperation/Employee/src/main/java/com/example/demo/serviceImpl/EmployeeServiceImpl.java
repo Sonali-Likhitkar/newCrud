@@ -1,6 +1,5 @@
 package com.example.demo.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,13 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public Employee updateEmployee(Employee employeeId) {
+	public Employee updateEmployee(Employee employee) {
 		
-		Employee i =  employeeRepository.findById(employeeId.getEmpId()).orElse(null);
+		Employee i =  employeeRepository.findById(employee.getEmpId()).orElse(null);
 		
-		i.setEmpId(employeeId.getEmpId());
-		i.setEmpName(employeeId.getEmpName());
-		i.setCity(employeeId.getCity());
+		i.setEmpId(employee.getEmpId());
+		i.setEmpName(employee.getEmpName());
+		i.setCity(employee.getCity());
 		
 		return employeeRepository.save(i);
 	}
@@ -49,10 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	}
 	@Override
-	public void saveAll(List<Employee> employee) {
-		employeeRepository.saveAll(employee);
+	public List<Employee> saveAll(List<Employee> employee) {
+		return employeeRepository.saveAll(employee);
 		
 	}
+	
 
 	@Override
 	public List<Employee> getListOfEmployees() {
