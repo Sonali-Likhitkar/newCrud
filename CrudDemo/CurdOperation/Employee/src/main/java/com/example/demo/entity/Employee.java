@@ -23,12 +23,12 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(Long empId, String empName, String city) {
-		super();
-		this.empId = empId;
-		this.empName = empName;
-		this.city = city;
-	}
+//	public Employee(Long empId, String empName, String city) {
+//		super();
+//		this.empId = empId;
+//		this.empName = empName;
+//		this.city = city;
+//	}
 
 	public Long getEmpId() {
 		return empId;
@@ -54,10 +54,10 @@ public class Employee {
 		this.city = city;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [empId=" + empId + ", empName=" + empName + ", city=" + city + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Employee [empId=" + empId + ", empName=" + empName + ", city=" + city + "]";
+//	}
 	
 	
 }

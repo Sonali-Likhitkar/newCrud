@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,20 +25,20 @@ public class EmployeeController {
 	private EmployeeService  employeeService;
 
 	
-	@GetMapping("/employees")
+	@GetMapping("/getListOfEmployees")
      public List<Employee> getListOfEmployees()
 	{
 		return employeeService.getListOfEmployees();
     	 
      }
 	@PostMapping("/multipleStudentSave")
-	public List<Employee>saveListOfEmployee(){
-		return employeeService.saveAll(saveListOfEmployee());
+	public List<Employee> saveListOfEmployee(@RequestBody List<Employee> employee){
+		return employeeService.saveMultipleRecords(employee);
 	}
 	
 	
 	@GetMapping("/employees/{employeeId}")
-	public Optional<Employee> getEmployee(@PathVariable Long employeeId ){
+	public Employee getEmployee(@PathVariable Long employeeId ){
 		return employeeService.getEmployee(employeeId);
 	}
 	
@@ -47,7 +48,7 @@ public class EmployeeController {
 	   return employeeService.saveEmployee(employee);
   
 	}
-	@PutMapping("/updateEmployees")
+	@PutMapping("/updateEmployees/{employeeId}")
 	public Employee updateEmployee(@RequestBody Employee employee) {
 		return employeeService.updateEmployee(employee);
 	}
@@ -58,6 +59,7 @@ public class EmployeeController {
 	}
 	
 }
+
 
 
 

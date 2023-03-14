@@ -9,15 +9,15 @@ public interface EmployeeService {
 	
 	public List<Employee> getListOfEmployees();
 	
-	public Optional<Employee> getEmployee(Long employee);
+	public Employee getEmployee(Long employee);
 	
 	public Employee saveEmployee(Employee employee);
 	
 	public Employee updateEmployee(Employee employeeId);
 	
-	public String deleteEmployee(Long employeeId);
+	public String deleteEmployee(long l);
 
-	public List<Employee> saveAll(List<Employee> employee);
+	public List<Employee> saveMultipleRecords(List<Employee> employee);
 	
 
 

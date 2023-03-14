@@ -1,7 +1,8 @@
 package com.example.demo.serviceTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -9,23 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.example.demo.entity.Employee;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.service.EmployeeService;
 import com.example.demo.serviceImpl.EmployeeServiceImpl;
 
 
 
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DataJpaTest
 public class EmployeeServiceTest {
 	
 
@@ -34,9 +32,6 @@ public class EmployeeServiceTest {
 	
 	@InjectMocks
 	private EmployeeServiceImpl  employeeServiceImpl;
-	
-	@Autowired
-	private EmployeeService employeeService;
 	
 	private Employee employee;
 	
@@ -49,11 +44,11 @@ public class EmployeeServiceTest {
 	
 	@Test
 	public void findById() {
-		
-		
-		when(employeeRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(getEmployee()));
-		Employee actualOutput=employeeServiceImpl.getEmployee((long)1).get();
-		assertThat(actualOutput).isNotNull();
+					
+			Employee employee = getEmployee();
+			lenient().when(employeeRepository.findByEmpId(Mockito.anyLong())).thenReturn(employee);
+			Employee actualOutput =employeeServiceImpl.getEmployee(146l);
+			assertEquals(actualOutput.toString(), employee.toString());
 
 	}
 	
@@ -71,9 +66,10 @@ public class EmployeeServiceTest {
 	@Test
 	public void updateEmp() {
 		Employee employee = getEmployee();
-		when(employeeRepository.findById(employee.getEmpId())).thenReturn(Optional.of(employee));
-		Employee actualOutput= employeeServiceImpl.updateEmployee(employee);	
-		assertNotNull(employee);
+		when(employeeRepository.save(Mockito.any(Employee.class))).thenReturn(employee);
+		Employee actualOutput= employeeServiceImpl.updateEmployee(employee);
+		assertThat(actualOutput).isEqualTo(employee);
+		//assertNotNull(employee);
 	}
 	
 	@Test
@@ -86,7 +82,7 @@ public class EmployeeServiceTest {
 	public void saveAllEmployee() {
 		List<Employee> employee = getEmployeeList();
 		when(employeeRepository.saveAll(employee)).thenReturn(employee);
-		List<Employee> actualEmp = employeeServiceImpl.saveAll(employee);
+		List<Employee> actualEmp = employeeServiceImpl.saveMultipleRecords(employee);
 		assertThat(actualEmp).isNotNull();
 	}
 	

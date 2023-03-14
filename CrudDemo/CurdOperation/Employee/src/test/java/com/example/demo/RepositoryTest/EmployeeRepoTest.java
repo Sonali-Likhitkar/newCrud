@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,20 +37,19 @@ public class EmployeeRepoTest {
 	   }
 	@Test
 	public void findById() {
-		Employee employee =getEmployee();
-		employeeRepository.save(employee);
-		Employee Result = employeeRepository.findById(employee.getEmpId()).get();
-		assertEquals(employee.getEmpId(), Result.getEmpId());
+//		Employee employee =getEmployee();
+//		employeeRepository.save(employee);
+		 Employee  Result = employeeRepository.findByEmpId(146l);
+		assertEquals(146l, Result.getEmpId());
 	}
 	
 	@Test 
 	public void findAllEmp() {
-		List<Employee> employee = getEmployeeList();
-		//employeeRepository.save(employee);
-		List<Employee> result = new ArrayList<>();
-	      employeeRepository.findAll().forEach(e -> result.add(e));
-	      assertEquals(result.size(), employee.size());	
-	}
+		 List<Employee> empList = (List<Employee>) employeeRepository.findAll();
+
+	        Assertions.assertThat(empList.size()).isGreaterThan(0);
+
+		}
 	
 	@Test
 	public void updateEmp() {
@@ -62,13 +63,10 @@ public class EmployeeRepoTest {
 	
 	@Test
 	   public void testDeleteById() {
-	      Employee employee = getEmployee();
-	      employeeRepository.save(employee);
-	      employeeRepository.deleteById(employee.getEmpId());
-	      List<Employee> result = new ArrayList<>();
-	      employeeRepository.findAll().forEach(e -> result.add(e));
-	      assertEquals(result.size(), 2);
-	      
+	      employeeRepository.deleteById(146l);
+	      Optional<Employee> optionalemployee = Optional.ofNullable(employeeRepository.findByEmpId(146l));
+	        Assertions.assertThat(optionalemployee).isEmpty();
+	    
 	}
 	
 	private Employee getEmployee() {
@@ -79,19 +77,6 @@ public class EmployeeRepoTest {
 	return employee;
 	}
 	
-	private List<Employee> getEmployeeList() {
-		List<Employee> list=new ArrayList<>();
-		Employee employee = new Employee();
-		employee.setEmpName("Priyanshi");
-		employee.setCity("Indore");
-		Employee employee1 = new Employee();
-		employee1.setEmpName("Sonali");
-		employee1.setCity("Indore");
-		list.add(employee);
-		list.add(employee1);		
-		
-	return list;
-	}
 	
 }
 

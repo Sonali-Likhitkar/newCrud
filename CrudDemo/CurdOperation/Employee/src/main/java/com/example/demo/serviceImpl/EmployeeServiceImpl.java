@@ -19,8 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	List<Employee> list;
 
 	@Override
-	public Optional<Employee> getEmployee(Long employeeId) {
-		return employeeRepository.findById(employeeId);
+	public Employee getEmployee(Long employeeId) {
+		return employeeRepository.findByEmpId(employeeId);
 	}
 	//
 	@Override
@@ -32,23 +32,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee updateEmployee(Employee employee) {
 		
-		Employee i =  employeeRepository.findById(employee.getEmpId()).orElse(null);
+		Employee emp = new Employee();
 		
-		i.setEmpId(employee.getEmpId());
-		i.setEmpName(employee.getEmpName());
-		i.setCity(employee.getCity());
+		emp.setEmpId(employee.getEmpId());
+		emp.setEmpName(employee.getEmpName());
+		emp.setCity(employee.getCity());
 		
-		return employeeRepository.save(i);
+		return employeeRepository.save(emp);
 	}
 	@Override
-	public String deleteEmployee(Long employeeId) {
+	public String deleteEmployee(long employeeId) {
 		
 		  employeeRepository.deleteById(employeeId);
 		  return "deleted successfully";
 	
 	}
 	@Override
-	public List<Employee> saveAll(List<Employee> employee) {
+	public List<Employee> saveMultipleRecords(List<Employee> employee) {
 		return employeeRepository.saveAll(employee);
 		
 	}
@@ -58,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getListOfEmployees() {
 		return employeeRepository.findAll();
 	}
+
 	
 
 }
