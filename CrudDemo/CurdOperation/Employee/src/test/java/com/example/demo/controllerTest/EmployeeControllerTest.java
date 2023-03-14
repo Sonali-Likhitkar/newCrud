@@ -7,11 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,17 +16,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import com.example.demo.controller.EmployeeController;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import net.minidev.json.JSONArray;
 
 
 public class EmployeeControllerTest {
@@ -131,11 +124,6 @@ public class EmployeeControllerTest {
 				.andExpect(status().isOk()).andReturn();
 		int status=mvcResult.getResponse().getStatus();
 		assertEquals(200, status);
-		
-//		String expectedOutput = mvcResult.getResponse().getContentAsString();
-//		Employee expectedOutputUser = objectMapper.readValue(expectedOutput, Employee.class);
-//		assertEquals(expectedOutputUser.getEmpId(), employee.getEmpId());
-		
 		
 	}
 	
